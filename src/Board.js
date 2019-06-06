@@ -79,15 +79,42 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      return false; // fixme
+
+      /*0: (4) [0, 0, 0, 0]
+        1: (4) [0, 0, 0, 0]
+        2: (4) [0, 0, 0, 0]
+        3: (4) [0, 0, 0, 0]
+        this.rows().length => 4
+        this.rows()[rowIndex] => [0,1,1,0]
+        this.rows()[rowIndex][1] => 1
+        */
+      var queens = 0;
+      for(var i = 0; i < this.rows().length; i++){
+        if(this.rows()[rowIndex][i] === 1){
+          queens++;
+        }
+      }
+      if(queens >= 2){
+        return true;
+      }else{
+        return false;
+      }
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
-      return false; // fixme
+      var queens = 0;
+      for(var i = 0; i < this.rows().length; i++){
+        if(this.hasRowConflictAt(i) === true){
+          queens++;
+        }
+      }
+      if(queens > 0){
+        return true;
+      }else{
+        return false;
+      }
     },
-
-
 
     // COLUMNS - run from top to bottom
     // --------------------------------------------------------------
