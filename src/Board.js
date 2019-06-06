@@ -62,7 +62,7 @@
     },
 
 
-/*
+    /*
          _             _     _
      ___| |_ __ _ _ __| |_  | |__   ___ _ __ ___ _
     / __| __/ _` | '__| __| | '_ \ / _ \ '__/ _ (_)
@@ -94,7 +94,7 @@
           queens++;
         }
       }
-      if(queens >= 2){
+      if(queens >= 2){ //when more than 2 queens conflict in a row
         return true;
       }else{
         return false;
@@ -109,7 +109,7 @@
           queens++;
         }
       }
-      if(queens > 0){
+      if(queens >= 1){ //when there's any queen on board that has conflict
         return true;
       }else{
         return false;
@@ -121,12 +121,32 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
-      return false; // fixme
+      var queens = 0;
+      for(var i = 0; i < this.rows().length; i++){
+        if(this.rows()[i][colIndex] === 1){ //when colIndex is fixed
+          queens++;
+        }
+      }
+      if(queens >= 2){
+        return true;
+      }else{
+        return false; // fixme
+      }
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
-      return false; // fixme
+      var queens = 0;
+      for(var i = 0; i < this.rows().length; i++){
+        if(this.hasColConflictAt(i) === true){
+          queens++;
+        }
+      }
+      if(queens >= 1){
+        return true;
+      }else{
+        return false; // fixme
+      }
     },
 
 
