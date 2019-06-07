@@ -30,7 +30,6 @@ describe('solvers', function() {
         expect(solutionCount).to.be.equal(expectedSolutionCount);
       });
     });
-
   });
 
   describe('findNQueensSolution()', function() {

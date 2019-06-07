@@ -80,7 +80,8 @@
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
 
-      /*0: (4) [0, 0, 0, 0]
+      /*
+        0: (4) [0, 0, 0, 0]
         1: (4) [0, 0, 0, 0]
         2: (4) [0, 0, 0, 0]
         3: (4) [0, 0, 0, 0]
@@ -96,9 +97,8 @@
       }
       if(queens >= 2){ //when more than 2 queens conflict in a row
         return true;
-      }else{
-        return false;
       }
+      return false;
     },
 
     // test if any rows on this board contain conflicts
@@ -111,9 +111,8 @@
       }
       if(queens >= 1){ //when there's any queen on board that has conflict
         return true;
-      }else{
-        return false;
       }
+      return false;
     },
 
     // COLUMNS - run from top to bottom
@@ -129,9 +128,8 @@
       }
       if(queens >= 2){
         return true;
-      }else{
-        return false; // fixme
       }
+      return false;
     },
 
     // test if any columns on this board contain conflicts
@@ -139,29 +137,61 @@
       var queens = 0;
       for(var i = 0; i < this.rows().length; i++){
         if(this.hasColConflictAt(i) === true){
-          queens++;
+          return true;
         }
       }
-      if(queens >= 1){
-        return true;
-      }else{
-        return false; // fixme
-      }
+      return false;
     },
-
-
 
     // Major Diagonals - go from top-left to bottom-right
     // --------------------------------------------------------------
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+
+      /*
+      loop for the elements in chessboard starting at current column index and first row
+      check if the current elements is a queen or not
+      track of elements at [i][col+i]
+      */
+      var queens = 0;
+      var col = majorDiagonalColumnIndexAtFirstRow;
+
+      for(var i = 0; i < this.rows().length; i++){
+        if(this.rows()[i][col+i] === 1){
+          queens++;
+        }
+      }
+      if(queens >= 2){
+        return true;
+      }else{
+        return false;
+      }
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
-      return false; // fixme
+      /*
+      0: [0, 1, 0, 0] undefined, undefined, undefined],
+      1: [0, 0, 1, 0] undefined, undefined, undefined],
+      2: [0, 0, 0, 0] undefined, undefined, undefined]
+      3: [0, 0, 0, 0] undefined, undefined, undefined]
+
+      0: [0, 0, 0, 0] undefined, undefined, undefined],
+      1: [1, 0, 0, 0] undefined, undefined, undefined],
+      2: [0, 0, 0, 0] undefined, undefined, undefined],
+      3: [0, 0, 1, 0] undefined, undefined, undefined]
+      */
+      var n = this.rows().length-1;
+      console.log("length", n);
+      for(var i = (n*-1); i < n; i++){
+        console.log("i", i);
+        console.log("n",n);
+        if(this.hasMajorDiagonalConflictAt(i) === true){
+          return true;
+        }
+      }
+      return false;
     },
 
 
@@ -171,11 +201,37 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      var n = this.rows().length;
+      var count = 0; //keep track of queen
+      var index = minorDiagonalColumnIndexAtFirstRow;
+
+      /*loop over board*/
+      for(var i = 0; i < n; i++){
+        //check if the current element at row contains 1 then return true
+        if(this.rows()[i][index-i] === 1){
+          count++;
+        }
+
+      }
+      if(count > 1){
+        return true;
+      }else{
+        return false;
+      }
+      //return false; // fixme
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
+      var n = this.rows().length - 1; // 3
+      var doubleBoard = 2 * n; //6
+      console.log('n: ',doubleBoard);
+      for(var i = 1; i < doubleBoard; i++){
+        console.log('i', i);
+        if(this.hasMinorDiagonalConflictAt(i) === true){
+          return true;
+        }
+      }
       return false; // fixme
     }
 
